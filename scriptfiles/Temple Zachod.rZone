@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Temple Zachod;
+
+//Under OnGameModeInit
+Temple Zachod = GangZoneCreate(756.897155, -1163.364746, 996.897155, -859.364746);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Temple Zachod, 199);

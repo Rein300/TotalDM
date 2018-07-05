@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Mulholland Obwodnica;
+
+//Under OnGameModeInit
+Mulholland Obwodnica = GangZoneCreate(1573.422851, -1177.803710, 1861.422851, -889.803710);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Mulholland Obwodnica, 

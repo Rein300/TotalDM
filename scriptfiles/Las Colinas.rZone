@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Las Colinas;
+
+//Under OnGameModeInit
+Las Colinas = GangZoneCreate(2209.774658, -1172.256103, 2505.774658, -1020.256103);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Las Colinas, 199);

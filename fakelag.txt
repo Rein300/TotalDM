@@ -1,0 +1,4 @@
+sleep 350
+onfoot_rate 15000
+incar_rate 10
+weapon_rate 1

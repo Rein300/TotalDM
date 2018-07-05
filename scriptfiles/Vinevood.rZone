@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Vinevood;
+
+//Under OnGameModeInit
+Vinevood = GangZoneCreate(724.617187, -854.408081, 1180.617187, -638.408081);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Vinevood, 199);

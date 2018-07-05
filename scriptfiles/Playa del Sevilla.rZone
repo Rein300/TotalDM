@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Playa del Sevilla;
+
+//Under OnGameModeInit
+Playa del Sevilla = GangZoneCreate(2610.979248, -2174.892089, 2842.979248, -1886.891967);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Playa del Sevilla, -65332);

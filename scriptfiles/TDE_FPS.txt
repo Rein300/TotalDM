@@ -1,0 +1,39 @@
+//Global TextDraws: 
+
+
+new Text:TDEditor_TD[1];
+
+TDEditor_TD[0] = TextDrawCreate(548.000000, 43.777809, "TOTAL_DM");
+TextDrawLetterSize(TDEditor_TD[0], 0.398500, 1.600000);
+TextDrawAlignment(TDEditor_TD[0], 1);
+TextDrawColor(TDEditor_TD[0], -1061109505);
+TextDrawSetShadow(TDEditor_TD[0], 2);
+TextDrawSetOutline(TDEditor_TD[0], 0);
+TextDrawBackgroundColor(TDEditor_TD[0], 255);
+TextDrawFont(TDEditor_TD[0], 3);
+TextDrawSetProportional(TDEditor_TD[0], 1);
+TextDrawSetShadow(TDEditor_TD[0], 2);
+
+
+
+//Player TextDraws: 
+
+
+new PlayerText:TDEditor_PTD[MAX_PLAYERS][1];
+
+TDEditor_PTD[playerid][0] = CreatePlayerTextDraw(playerid, 2.500000, 357.999969, "FPS_%d~n~PING_%d");
+PlayerTextDrawLetterSize(playerid, TDEditor_PTD[playerid][0], 0.300999, 1.649777);
+PlayerTextDrawAlignment(playerid, TDEditor_PTD[playerid][0], 1);
+PlayerTextDrawColor(playerid, TDEditor_PTD[playerid][0], -16776961);
+PlayerTextDrawSetShadow(playerid, TDEditor_PTD[playerid][0], 20);
+PlayerTextDrawSetOutline(playerid, TDEditor_PTD[playerid][0], -1);
+PlayerTextDrawBackgroundColor(playerid, TDEditor_PTD[playerid][0], 255);
+PlayerTextDrawFont(playerid, TDEditor_PTD[playerid][0], 1);
+PlayerTextDrawSetProportional(playerid, TDEditor_PTD[playerid][0], 1);
+PlayerTextDrawSetShadow(playerid, TDEditor_PTD[playerid][0], 20);
+
+
+
+
+//Total textdraws exported: 2 (1 global textdraws / 1 player textdraws) ~ 1/6/2018 ~ 17:16:39
+TDEditor V1.17 BY ADRI1

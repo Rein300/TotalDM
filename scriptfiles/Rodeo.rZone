@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Rodeo;
+
+//Under OnGameModeInit
+Rodeo = GangZoneCreate(160.849700, -1345.876831, 520.849731, -1081.876831);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Rodeo, 199);

@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Temple;
+
+//Under OnGameModeInit
+Temple = GangZoneCreate(998.820190, -1164.092041, 1350.820190, -892.092041);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Temple, 199);

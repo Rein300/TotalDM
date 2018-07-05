@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Ocean Docks 2;
+
+//Under OnGameModeInit
+Ocean Docks 2 = GangZoneCreate(2606.630126, -2561.697265, 2870.630126, -2329.697265);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Ocean Docks 2, -16777017);

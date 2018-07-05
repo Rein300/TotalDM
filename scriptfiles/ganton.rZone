@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Ganton;
+
+//Under OnGameModeInit
+Ganton = GangZoneCreate(2184.603027, -1745.522094, 2560.603027, -1601.522094);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Ganton, 1538909898);

@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new El Corona;
+
+//Under OnGameModeInit
+El Corona = GangZoneCreate(1808.563720, -2183.183105, 1968.563720, -1967.183105);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, El Corona, 1538909898);

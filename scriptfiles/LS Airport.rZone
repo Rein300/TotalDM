@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new LS Airport;
+
+//Under OnGameModeInit
+LS Airport = GangZoneCreate(1565.020019, -2337.013183, 1805.020019, -2241.013183);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, LS Airport, 1538909898);

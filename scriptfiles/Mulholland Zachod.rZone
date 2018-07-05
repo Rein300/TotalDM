@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Mulholland Zachod;
+
+//Under OnGameModeInit
+Mulholland Zachod = GangZoneCreate(1346.196777, -1167.622680, 1578.196777, -887.622680);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Mulholland Zachod, 199);

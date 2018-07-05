@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Vinveood Zachod;
+
+//Under OnGameModeInit
+Vinveood Zachod = GangZoneCreate(517.088195, -1207.008300, 749.088195, -855.008239);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Vinveood Zachod, 199);

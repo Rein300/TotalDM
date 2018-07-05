@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Idlewood;
+
+//Under OnGameModeInit
+Idlewood = GangZoneCreate(2395.463867, -2054.256835, 2595.463867, -1726.256713);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Idlewood, -66);

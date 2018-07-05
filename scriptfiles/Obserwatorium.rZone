@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Obserwatorium;
+
+//Under OnGameModeInit
+Obserwatorium = GangZoneCreate(1062.399169, -2157.401855, 1334.399169, -1893.401977);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Obserwatorium, -8388424);

@@ -1,0 +1,8 @@
+//At The Top Of The Script:
+new Los Flores 2;
+
+//Under OnGameModeInit
+Los Flores 2 = GangZoneCreate(2503.864501, -1157.549926, 2831.864501, -1029.549926);
+
+//Under OnPlayerSpawn:
+GangZoneShowForPlayer(playerid, Los Flores 2, 199);
