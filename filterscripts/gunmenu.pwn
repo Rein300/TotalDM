@@ -8,12 +8,17 @@ new bool:gunmenu[MAX_PLAYERS], gunlimit[MAX_PLAYERS], guns[MAX_PLAYERS][5];
 
 public OnPlayerConnect(playerid)
 {
-	gunmenu[playerid] = false;
-	gunlimit[playerid] = 0;
+	resetGlobalVariables(playerid);
 	return 1;
 }
 
 public OnPlayerDisconnect(playerid, reason)
+{
+	resetGlobalVariables(playerid);
+	return 1;
+}
+
+resetGlobalVariables(playerid)
 {
 	gunmenu[playerid] = false;
 	gunlimit[playerid] = 0;
@@ -27,19 +32,15 @@ public OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerSpawn(playerid)
 {
+	checkSpawnGunMenu(playerid);
+	return 1;
+}
+
+checkSpawnGunMenu(playerid) {
 	if(gunlimit[playerid] == 4) gunmenu[playerid] = true;
 	if(gunmenu[playerid] == false && gunlimit[playerid] <= 3)
 	{
-		ShowPlayerDialog(playerid, DIALOG_GUNMENU, DIALOG_STYLE_TABLIST_HEADERS, "Wybierz uzbrojenie!",
-		"Bron\tDamage\n\
-		Deagle\t30\n\
-		Shotgun\t15\n\
-		MP5\t8\n\
-		Sniper Rifle\t35\n\
-		Spaz\t15\n\
-		Sawn-Off\t10\n\
-		M4\t14\n\
-		Country Rifle\t40", "Wybierz", "Zamknij");
+		gunList(playerid);
 	}
 	else
 	{
@@ -57,7 +58,6 @@ public OnPlayerSpawn(playerid)
 			SetPlayerHealth(playerid, 10.0);
 		}
 	}
-
 	return 1;
 }
 
@@ -65,7 +65,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	if(dialogid == DIALOG_GUNMENU)
 	{
-		if(gunlimit[playerid] <= 3)
+		dialogGunMenu(playerid, response, listitem);
+		return 1;
+	}
+	return 0;
+}
+
+dialogGunMenu(playerid, response, listitem) { //never open this shit
+	if(gunlimit[playerid] <= 3)
 		{
 			if(response)
 			{
@@ -135,10 +142,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			SendClientMessage(playerid, -1, "Masz juz wszystkie bronie.");
 		}
-
-		return 1;
-	}
-	return 0;
+	return 1;
 }
 
 CMD:gunmenu(playerid)
@@ -160,7 +164,13 @@ CMD:gunmenu(playerid)
 	guns[playerid][4] = 0;
 	if(gunmenu[playerid] == false)
 	{
-		ShowPlayerDialog(playerid, DIALOG_GUNMENU, DIALOG_STYLE_TABLIST_HEADERS, "Wybierz uzbrojenie!",
+		gunList(playerid);
+	}
+	return 1;
+}
+
+gunList(playerid) {
+	ShowPlayerDialog(playerid, DIALOG_GUNMENU, DIALOG_STYLE_TABLIST_HEADERS, "Wybierz uzbrojenie!",
 		"Bron\tDamage\n\
 		Deagle\t30\n\
 		Shotgun\t15\n\
@@ -168,8 +178,7 @@ CMD:gunmenu(playerid)
 		Sniper Rifle\t35\n\
 		Spaz\t15\n\
 		Sawn-Off\t10\n\
-		M4\t20\n\
-		Country Rifle\t40", "Wybierz", "Zamknij");
-	}
-	return 1;
+		M4\t14\n\
+		Country Rifle\t35", "Wybierz", "Zamknij");
+	return 1;//main gun list
 }

@@ -35,7 +35,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid)
         case 26: customDamage(playerid, amount, 10.0);
         case 29: customDamage(playerid, amount, 8.0);
         case 31: customDamage(playerid, amount, 14.0);
-        case 33: customDamage(playerid, amount, 40.0);
+        case 33: customDamage(playerid, amount, 35.0);
         case 34: customDamage(playerid, amount, 35.0);
     }
 

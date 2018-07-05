@@ -101,11 +101,11 @@ public OnPlayerConnect(playerid)
 	else
 	{
 		SendClientMessage(playerid, -1, "Nie znaleziono Ciebie w bazie danych, zarejestruj siê.");
-		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpocz¹æ grê na naszym serwerze musisz siê zarejestrowaæ, wpisz nowe has³o w okienku.", "Wbita", "Spierdalam");
+		registerDialog(playerid);
 		return 1;
 	}
 	
-	ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
+	loginDialog(playerid);
 
 	mysql_free_result();
 	
@@ -137,19 +137,14 @@ public OnPlayerSpawn(playerid)
 
 public OnPlayerDeath(playerid, killerid, reason)
 {
+	saveDeathStats(playerid);
+	SendDeathMessage(killerid, playerid, reason);
+	return 1;
+}
+
+saveDeathStats(playerid) {
 	_killstreak[playerid] = 0;
 	playerCache[playerid][skin] = GetPlayerSkin(playerid);
-	SendDeathMessage(killerid, playerid, reason);
-	if(random(250) == 50)
-	{
-		new message[80], deathname[MAX_PLAYER_NAME];
-		GetPlayerName(playerid, deathname, sizeof(deathname));
-		format(message, sizeof(message), "{ff0000}(R) Gracz %s uœmierci³ gracza %s!", playerCache[killerid][username], deathname);
-		SendClientMessageToAll(-1, message);
-		SendClientMessage(playerid, -1, "Zgin¹³eœ!");
-		Ban(playerid);
-		Kick(playerid);
-	}
 	return 1;
 }
 
@@ -307,50 +302,16 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	if(dialogid == DIALOG_REGISTER)
 	{
-		if(strlen(inputtext) > 0)
-		{
-			new gName[MAX_PLAYER_NAME];
-			GetPlayerName(playerid, gName, sizeof(gName));
-			format(query, sizeof(query), "INSERT INTO users (username, pass) VALUES ('%s', '%s')", gName, inputtext);
-			mysql_query(query);
-		}
-		else
-		{
-			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpocz¹æ grê na naszym serwerze musisz siê zarejestrowaæ, wpisz nowe has³o w okienku.", "Wbita", "Spierdalam");
-		}
-		return 1;
+		registerFunc(playerid, inputtext);
 	}
 	if(dialogid == DIALOG_LOGIN)
 	{
-		if(strlen(inputtext) > 0)
-		{
-			if(!strcmp(playerCache[playerid][pass], inputtext, false))
-			{
-				SpawnPlayer(playerid);
-			}
-			else
-			{
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
-			}
-		}
-		else
-		{
-			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
-		}
-		return 1;
+		loginFunc(playerid, inputtext);
 	}
 
 	if(dialogid == DIALOG_GANG_MAIN)
 	{
-		if(response)
-		{
-			DialogGangMain(playerid, listitem, DIALOG_GANG_CREATE, DIALOG_STYLE_INPUT);
-		}
-		else
-		{
-			// TODO: Send comunicate to player
-			SendClientMessageToAll(-1, "Blad pizdy");
-		}
+		gangDialog(playerid, response, listitem);
 	}
 
 	if(dialogid == DIALOG_GANG_CREATE)
@@ -365,6 +326,62 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 0;
 }
 
+registerFunc(playerid, inputtext[]) {
+	if(strlen(inputtext) > 0)
+	{
+		new gName[MAX_PLAYER_NAME];
+		GetPlayerName(playerid, gName, sizeof(gName));
+		format(query, sizeof(query), "INSERT INTO users (username, pass) VALUES ('%s', '%s')", gName, inputtext);
+		mysql_query(query);
+	}
+	else
+	{
+		registerDialog(playerid);
+	}
+	return 1;
+}
+
+loginFunc(playerid, inputtext[]) {
+	if(strlen(inputtext) > 0)
+	{
+		if(!strcmp(playerCache[playerid][pass], inputtext, false))
+		{
+			SpawnPlayer(playerid);
+		}
+		else
+		{
+			loginDialog(playerid);
+		}
+	}
+	else
+	{
+		loginDialog(playerid);
+	}
+	return 1;
+}
+
+loginDialog(playerid) {
+	ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
+	return 1;
+}
+
+registerDialog(playerid) {
+	ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpocz¹æ grê na naszym serwerze musisz siê zarejestrowaæ, wpisz nowe has³o w okienku.", "Wbita", "Spierdalam");
+	return 1;
+}
+
+gangDialog(playerid, response, listitem) {
+	if(response)
+	{
+		DialogGangMain(playerid, listitem, DIALOG_GANG_CREATE, DIALOG_STYLE_INPUT);
+	}
+	else
+	{
+		SendClientMessage(playerid, -1, "Blad pizdy");
+	}
+	return 1;
+}
+
 public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 {
 	return 1;
@@ -374,63 +391,31 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 {
 	if(!IsPlayerPaused(damagedid))
 	{
-		if(weaponid == WEAPON_MP5)
-		{ 
-			_killstreak[playerid] += 2;
-			playerCache[playerid][score] += 2;
-			scoreStats[playerid] += 2;
-		}
-		else if(weaponid == WEAPON_SHOTGUN)
-		{
-			_killstreak[playerid] += 4;
-			_killstreak[damagedid] -= 1;
-			playerCache[playerid][score] += 4;
-			scoreStats[playerid] += 4;
-		}
-		else if(weaponid == WEAPON_DEAGLE)
-		{
-			_killstreak[playerid] += 8;
-			_killstreak[damagedid] -= 2;
-			playerCache[playerid][score] += 8;
-			scoreStats[playerid] += 8;
-		}
-		else if(weaponid == WEAPON_SNIPER)
-		{
-			_killstreak[playerid] += 10;
-			_killstreak[damagedid] -= 3;
-			playerCache[playerid][score] += 10;
-			scoreStats[playerid] += 10;
-		}
-		else if(weaponid == WEAPON_SHOTGSPA)
-		{
-			_killstreak[playerid] += 3;
-			_killstreak[damagedid] -= 1;
-			playerCache[playerid][score] += 3;
-			scoreStats[playerid] += 3;
-		}
-		else if(weaponid == WEAPON_SAWEDOFF)
-		{
-			_killstreak[playerid] += 1;
-			playerCache[playerid][score] += 1;
-			scoreStats[playerid] += 1;
-		}
-		else if(weaponid == WEAPON_RIFLE)
-		{
-			_killstreak[playerid] += 10;
-			_killstreak[damagedid] -= 3;
-			playerCache[playerid][score] += 10;
-			scoreStats[playerid] += 10;
-		}
-		else if(weaponid == WEAPON_M4)
-		{
-			_killstreak[playerid] += 2;
-			_killstreak[damagedid] -= 1;
-			playerCache[playerid][score] += 2;
-			scoreStats[playerid] += 2;
-		}
-		SetPlayerScore(playerid, _killstreak[playerid]);
-		SetPlayerScore(damagedid, _killstreak[damagedid]);
+		if(weaponid == WEAPON_MP5) damageScoreCounter(playerid, damagedid, 2, 0);
+		else if(weaponid == WEAPON_SHOTGUN) damageScoreCounter(playerid, damagedid, 4, 1);
+		else if(weaponid == WEAPON_DEAGLE) damageScoreCounter(playerid, damagedid, 8, 2);
+		else if(weaponid == WEAPON_SNIPER) damageScoreCounter(playerid, damagedid, 8, 3);
+		else if(weaponid == WEAPON_SHOTGSPA) damageScoreCounter(playerid, damagedid, 3, 1);
+		else if(weaponid == WEAPON_SAWEDOFF) damageScoreCounter(playerid, damagedid, 1, 0);
+		else if(weaponid == WEAPON_RIFLE) damageScoreCounter(playerid, damagedid, 10, 3);
+		else if(weaponid == WEAPON_M4) damageScoreCounter(playerid, damagedid, 2, 1);
 	}
+	checkPlayerKillstreakColor(playerid);
+
+	return 1;
+}
+
+damageScoreCounter(playerid, damagedid, addScore, decreaseScore) { //hit score constructor
+	_killstreak[playerid] += addScore;
+	_killstreak[damagedid] -= decreaseScore;
+	playerCache[playerid][score] += addScore;
+	scoreStats[playerid] += addScore;
+	SetPlayerScore(playerid, _killstreak[playerid]);
+	SetPlayerScore(damagedid, _killstreak[damagedid]);
+	return 1;
+}
+
+checkPlayerKillstreakColor(playerid) { //checks if script should change player color
 	if(_killstreak[playerid] >= 100 && _killstreak[playerid] <= 111)	
 	{
 		SetPlayerColor(playerid, 0x00FA00FF);
@@ -447,7 +432,6 @@ public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 	{ 
 		SetPlayerColor(playerid, 0x000000FF);
 	}
-
 	return 1;
 }
 
@@ -462,7 +446,7 @@ Welcome(playerid)
 	gettime(hour, minute, second);
 	format(welcome, sizeof(welcome), "{00cc44}(L) Witamy na serwerku, {f2f2f2}%s.", playerCache[playerid][username]);
 	SendClientMessage(playerid, -1, welcome);
-	SendClientMessage(playerid, -1, "{00cc44}(L) Ostatnia aktualizacja: {f2f2f2}10/06/2018");
+	SendClientMessage(playerid, -1, "{00cc44}(L) Ostatnia aktualizacja: {f2f2f2}05/07/2018");
 	new nick [MAX_PLAYER_NAME];
 	new hello [128];
 	new ip [32];
