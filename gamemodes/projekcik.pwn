@@ -6,7 +6,7 @@
 
 #define SQL_HOST "localhost"
 #define SQL_USER "root"
-#define SQL_PASS "asieknick7"
+#define SQL_PASS ""
 #define SQL_DB "samp"
 
 #define DIALOG_REGISTER 1
@@ -100,12 +100,12 @@ public OnPlayerConnect(playerid)
 	}
 	else
 	{
-		SendClientMessage(playerid, -1, "Nie znaleziono Ciebie w bazie danych, zarejestruj siê.");
-		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpocz¹æ grê na naszym serwerze musisz siê zarejestrowaæ, wpisz nowe has³o w okienku.", "Wbita", "Spierdalam");
+		SendClientMessage(playerid, -1, "Nie znaleziono Ciebie w bazie danych, zarejestruj siÃª.");
+		ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpoczÂ¹Ã¦ grÃª na naszym serwerze musisz siÃª zarejestrowaÃ¦, wpisz nowe hasÂ³o w okienku.", "Wbita", "Spierdalam");
 		return 1;
 	}
 	
-	ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
+	ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na Å“wiecie!\n- Polecam, Robert MakÂ³owicz.", "EBE EBE", "Spierdalam");
 
 	mysql_free_result();
 	
@@ -144,9 +144,9 @@ public OnPlayerDeath(playerid, killerid, reason)
 	{
 		new message[80], deathname[MAX_PLAYER_NAME];
 		GetPlayerName(playerid, deathname, sizeof(deathname));
-		format(message, sizeof(message), "{ff0000}(R) Gracz %s uœmierci³ gracza %s!", playerCache[killerid][username], deathname);
+		format(message, sizeof(message), "{ff0000}(R) Gracz %s uÅ“mierciÂ³ gracza %s!", playerCache[killerid][username], deathname);
 		SendClientMessageToAll(-1, message);
-		SendClientMessage(playerid, -1, "Zgin¹³eœ!");
+		SendClientMessage(playerid, -1, "ZginÂ¹Â³eÅ“!");
 		Ban(playerid);
 		Kick(playerid);
 	}
@@ -316,7 +316,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		else
 		{
-			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpocz¹æ grê na naszym serwerze musisz siê zarejestrowaæ, wpisz nowe has³o w okienku.", "Wbita", "Spierdalam");
+			ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_INPUT, "Rejestracja", "Aby rozpoczÂ¹Ã¦ grÃª na naszym serwerze musisz siÃª zarejestrowaÃ¦, wpisz nowe hasÂ³o w okienku.", "Wbita", "Spierdalam");
 		}
 		return 1;
 	}
@@ -330,12 +330,12 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else
 			{
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
+				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na Å“wiecie!\n- Polecam, Robert MakÂ³owicz.", "EBE EBE", "Spierdalam");
 			}
 		}
 		else
 		{
-			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na œwiecie!\n- Polecam, Robert Mak³owicz.", "EBE EBE", "Spierdalam");
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_INPUT, "Logowanie", "Wbijaj mordunio na najlepszy serwer SAMP na Å“wiecie!\n- Polecam, Robert MakÂ³owicz.", "EBE EBE", "Spierdalam");
 		}
 		return 1;
 	}
@@ -469,7 +469,7 @@ Welcome(playerid)
 	GetPlayerName(playerid, nick, sizeof(nick));
 	GetPlayerIp(playerid, ip, sizeof(ip));
 	printf("Gracz %s polaczyl sie z serwerem, jego IP to: %s, godzina: %02d:%02d:%02d", nick, ip, hour, minute, second);
-	format(hello, sizeof(hello), "{ff9933}(G){f2f2f2} Gracz {ff9933}%s {f2f2f2}wszed³ na serwer.", nick);
+	format(hello, sizeof(hello), "{ff9933}(G){f2f2f2} Gracz {ff9933}%s {f2f2f2}wszedÂ³ na serwer.", nick);
 	SendClientMessageToAll(-1, hello);
 	return 1;
 }
@@ -484,7 +484,7 @@ Bye(playerid)
 	GetPlayerName(playerid, nick, sizeof(nick));
 	GetPlayerIp(playerid, ip, sizeof(ip));
 	printf("Gracz %s opuscil serwer, jego IP to: %s, godzina: %02d:%02d:%02d", nick, ip, hour, minute, second);
-	format(hello, sizeof(hello), "{ff9933}(G) Gracz {f2f2f2}%s {ff9933}opuœci³ serwer.", nick);
+	format(hello, sizeof(hello), "{ff9933}(G) Gracz {f2f2f2}%s {ff9933}opuÅ“ciÂ³ serwer.", nick);
 	SendClientMessageToAll(-1, hello);
 	return 1;
 }
@@ -507,8 +507,8 @@ DialogGangCreate(inputtext[], playerid, playerGang, gangUid, gangName[]) {
 DialogGangMain(playerid, listitem, dialogId, dialogStyleInput) {
 	switch(listitem)
 	{
-		case 0:	ShowPlayerDialog(playerid, dialogId, dialogStyleInput, "Zak³adanie gangu", "Wpisz pe³n¹ nazwê gangu poni¿ej:", "OK", "Anuluj");
-		case 1:	ShowPlayerDialog(playerid, dialogId, dialogStyleInput, "Do³¹czanie do gangu", "Wybierz zainteresowany gang z listy:", "OK", "Anuluj");
+		case 0:	ShowPlayerDialog(playerid, dialogId, dialogStyleInput, "ZakÂ³adanie gangu", "Wpisz peÂ³nÂ¹ nazwÃª gangu poniÂ¿ej:", "OK", "Anuluj");
+		case 1:	ShowPlayerDialog(playerid, dialogId, dialogStyleInput, "DoÂ³Â¹czanie do gangu", "Wybierz zainteresowany gang z listy:", "OK", "Anuluj");
 		case 2:	SendClientMessage(playerid, -1, "Cpunek");
 	}
 	return 1;
@@ -542,12 +542,12 @@ createNewGang(inputtext[], playerid, playerGang, gangUid, data[]) {
 				}
 			}
 		}
-		else SendClientMessage(playerid, -1, "Minimum 4 znaki -> Maksimum 16 znaków.");
+		else SendClientMessage(playerid, -1, "Minimum 4 znaki -> Maksimum 16 znakÃ³w.");
 	return 1;
 }
 
 handleExistingGang(playerid) {
-	SendClientMessage(playerid, -1, "Masz ju¿ swój gang.");
+	SendClientMessage(playerid, -1, "Masz juÂ¿ swÃ³j gang.");
 	mysql_free_result();
 	return 1;
 }
@@ -576,7 +576,7 @@ addUserToGang(data[], gangUid, nickname[]) {
 
 gangExists(data[], playerid, gangName[]) {
 	sscanf(data, "p<|>s[16]", gangName);
-	SendClientMessage(playerid, -1, "Gang o podanej nazwie ju¿ istnieje.");
+	SendClientMessage(playerid, -1, "Gang o podanej nazwie juÂ¿ istnieje.");
 	mysql_free_result();
 	return 1;
 }
@@ -601,9 +601,9 @@ public Advertise()
 
 CMD:gang(playerid)
 {
-   ShowPlayerDialog(playerid, DIALOG_GANG_MAIN, DIALOG_STYLE_LIST, "Gangi", "1. Stwórz gang.\n\
-   																			2. Do³¹cz do gangu.\n\
-   																			3. Lista gangów.", "OK", "Anuluj");
+   ShowPlayerDialog(playerid, DIALOG_GANG_MAIN, DIALOG_STYLE_LIST, "Gangi", "1. StwÃ³rz gang.\n\
+   																			2. DoÂ³Â¹cz do gangu.\n\
+   																			3. Lista gangÃ³w.", "OK", "Anuluj");
    return 1;
 }
 
@@ -612,28 +612,28 @@ CMD:kick(playerid, params[])
 	new receiverid, receivername[MAX_PLAYER_NAME], reason[16], message[64];
 	if(sscanf(params, "ds[16]", receiverid, reason))
 	{
-		SendClientMessage(playerid, -1, "U¿ycie komendy: /kick [id] [powód]");
+		SendClientMessage(playerid, -1, "UÂ¿ycie komendy: /kick [id] [powÃ³d]");
 	}
 	if(playerCache[playerid][rank] <= 2)
 	{
-		SendClientMessage(playerid, -1, "Nie jesteœ adminem.");
+		SendClientMessage(playerid, -1, "Nie jesteÅ“ adminem.");
 	}
 	if(!IsPlayerConnected(receiverid))
 	{
-		SendClientMessage(playerid, -1, "Gracz nie jest po³¹czony.");
+		SendClientMessage(playerid, -1, "Gracz nie jest poÂ³Â¹czony.");
 	}
 	if(playerid == receiverid)
 	{
-		SendClientMessage(playerid, -1, "Nie mo¿esz sam siê wyrzuciæ z serwera.");
+		SendClientMessage(playerid, -1, "Nie moÂ¿esz sam siÃª wyrzuciÃ¦ z serwera.");
 	}
 	if(strlen(reason) == 0)
 	{
-		SendClientMessage(playerid, -1, "Nie poda³eœ powodu wyrzucenia.");
+		SendClientMessage(playerid, -1, "Nie podaÂ³eÅ“ powodu wyrzucenia.");
 	}
 
 	GetPlayerName(receiverid, receivername, sizeof(receivername));
 	Kick(receiverid);
-	format(message, sizeof(message), "%s zosta³ wyrzucony z serwera! Powód: %s", receivername, reason);
+	format(message, sizeof(message), "%s zostaÂ³ wyrzucony z serwera! PowÃ³d: %s", receivername, reason);
 	SendClientMessageToAll(-1, message);
 	
 	return 1;
